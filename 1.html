@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<img src="images/1.jpg" id="myImage">
+	<br>
+	<audio id="myMusic" style="display: none" src="1.mp3" ></audio>
+	<input type="button" id="start" value="开始播放" >
+	<input type="button" id="stop" value="停止播放" >
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		//使用imagesPath数组保存所有的图片路径
+		var imagesPath = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/5.jpg","images/6.jpg"];
+		//使用timeId变量保存定时器id
+		var timeId = null;
+
+		var index = 0;
+		//绑定开始播放按钮的点击事件
+		document.querySelector("#start").onclick = function(){
+			//使用定时器，一秒切换一张图片
+			timeId = setInterval(function(){
+				if(index>=imagesPath.length){
+					index = 0;
+				}
+
+				document.querySelector("#myImage").src = imagesPath[index];
+				index++;
+
+			},1000);
+			//开始播放音乐
+			document.querySelector("#myMusic").play();
+
+		}
+		//绑定停止播放按钮的点击事件
+		document.querySelector("#stop").onclick = function(){
+			//关闭定时器，不在循环播放图片
+			clearInterval(timeId);
+			//暂停播放音乐
+			document.querySelector("#myMusic").pause();
+		}
+
+
+	}
+
+
+	var bb = {
+
+		b:()=>{
+			console.log(this);//bb.b() => window
+		},
+		c:()=>{
+			setTimeout(function(){
+				console.log(this);//bb.c() => window
+			},200);
+		},
+		d:function(){
+			var dd = ()=>{
+				console.log(this);//bb.b() => bb
+			}
+			// console.log(this);
+			dd();
+		}
+	}
+
+	// bb.c();
+	bb.d();
+
+	function foo() {
+	  setTimeout(() => {
+	    console.log(this);
+	  }, 100);
+	}
+
+	foo();
+
+
+</script>
+</html>
